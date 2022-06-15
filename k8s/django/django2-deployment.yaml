@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: django2
+  template:
+    metadata:
+      labels:
+        component: django2
+    spec:
+      initContainers:
+      containers:
+        - name: django2
+          image: it21998/mydjangoapp2
+          ports:
+            - containerPort: 9000
+          envFrom:
+            - configMapRef:
+                name: django-config
+          imagePullPolicy: Always
